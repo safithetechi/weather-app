@@ -54,7 +54,7 @@ const Chart = ({weatherData})=>{
     console.log(matches)
 
     return (
-      <Paper id="chart">
+      <Paper>
                 <BarChart data={chartData} options={chartOptions}  width={100}
   height={25} />
 
