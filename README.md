@@ -1,6 +1,6 @@
-# Getting Started with Create React App
+# Weather App made using React and Material UI
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Preview avalible at https://safithetechi.github.io/weather-app/
 
 ## Available Scripts
 
