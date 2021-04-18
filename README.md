@@ -21,7 +21,7 @@ const InitState = {
 * The <b>list</b> holds the main.temp and timestamp that is received from OpenWeatherAPI call
 * The <b>error</b> property holds the error message while retriving data from the API
 * The <b>unit</b> property determines what is the current Unit of temprature the entire application is using
-* The <b>barChartId</b> property is assigned when a card is clicked this id corresponds with the date on the card which the selector function (selectWeatherDataForBarChart) uses to get the time span for the right day
+* The <b>barChartId</b> property is assigned when a card is clicked this id corresponds with the date on the card which the selector function (selectWeatherDataForBarChart) uses to get the time span and temprature data for that day
 
 
 ### How does the Application determines what Unit to use i.e Fahrenheit to Celsius ?
@@ -123,7 +123,7 @@ const fetchWeather = ()=>{
 ```
 
 
-### How does the Application renders the cards and the chart?
+### How does the Application render the cards and the chart?
 
 
 The Following Helper function take the timestamp as their arguments and return the UTC equivalent
@@ -197,7 +197,7 @@ const selectTempratureForDay = state=>{
 } 
 ```
 
-Example Output the numbers are the date and temp is the temprature in kaliv and the date is the timestamp
+Example Output: The key is the date and the array assigned to it is the temprature and time data 
 
 ```javascript
   18: Array(6)
@@ -310,10 +310,10 @@ export const selectWeatherDataForBarChart = state=>{
 
 ## Further imporvements Required
 
-Other Feature that can be added can be to get location data of the current user and to make sure that our API Key is secure we can use the something like dot-env package to hide it from people that might want to steal it
+Other Feature that can be added is to get location data of the current user and to make sure that our API Key is secure, we can use  something like dot-env package to hide it from people that might want to steal it
 
 
-Other than making the design responsive and adding unit tests, The following code can be memoized to save time for loading. This  function transforms the data so the selector functions for the Cards and the BarChart can render it accordingly. Hence if this is cached it will save time for loading. Also this function can be refactored to not have so many lines of code
+Other than making the design responsive and adding unit tests, The following code can be memoized to improve performance. This  function transforms the data so the selector functions for the Cards and the BarChart can render it accordingly. Hence if this is cached it will only run once and not twice improving performance. Also this function can be refactored to not have so many lines of code
  
  
  ```javascript
