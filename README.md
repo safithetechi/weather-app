@@ -39,7 +39,7 @@ const changeUnit = unit=>{
 
 ```
 
-The Temprature values recived from OpenWeather is in Kalvin so the following function converts it to the requested unit and then the returned value is rendered
+The Temprature values recived from OpenWeather are in Kalvin so the following function converts it to the requested unit and then the returned value is rendered
 
  ```javascript 
 
@@ -145,7 +145,7 @@ const TimeStampToUTCTimeString = (timeStamp)=>{
 }
 ```
 
-This functions the numeric date which is used as an identifier
+This function returns the numeric date which is used as an identifier
 ```javascript 
 const TimeStampToUTCDate = (timeStamp)=>{
 
