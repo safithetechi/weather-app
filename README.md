@@ -69,7 +69,7 @@ const Kal2Fer = (Kal)=>{
 }
 ```
 
-### How the Application Fetches and renders the data ?
+### How the Application Fetches and stores the data ?
 
 
 These actions are called depending on the state the API request is in i.e in progress , is a success or has failed
@@ -121,6 +121,12 @@ const fetchWeather = ()=>{
     }
 }
 ```
+
+
+### How the Application renders the cards and the chart?
+
+
+
 
 ## Further imporvements Required
 
