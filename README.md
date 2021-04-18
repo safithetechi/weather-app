@@ -17,13 +17,18 @@ const InitState = {
 } 
 ```
 
-The Loading property determines whether to display the LoadingScreen or WeatherScreen
+* The <b>loading</b> property determines the transition from Loading Screen Component to Weather Screen Component
+* The <b>list</b> holds the main.temp and timestamp that is received from OpenWeatherAPI call
+* The <b>error</b> property holds the error message while retriving data from the API
+* The <b>unit</b> property determines what is the current Unit of temprature the entire application is using
+* The <b>barChartId</b> property is assigned when a card is clicked this id corresponds with the date on the card which the selector function (selectWeatherDataForBarChart) uses to get the time span for the right day
 
- ```javascript 
-  <div className="App">
-    {loading ? <LoadingScreen/> : <WeatherScreen />}
-    </div>
-```
+
+### How the Application determines what Unit to use i.e Fahrenheit to Celsius ?
+
+
+
+
 
 
 ## Further imporvements Required
@@ -72,6 +77,6 @@ const selectTempratureForDay = state=>{
 } 
 ```
     
-
+Other Feature that can be added can be to get location data of the current user and to make sure that our API Key is secure we can use the something like dot-env package to hide it from people that might want to steal it
 
 
