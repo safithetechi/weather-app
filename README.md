@@ -24,7 +24,7 @@ const InitState = {
 * The <b>barChartId</b> property is assigned when a card is clicked this id corresponds with the date on the card which the selector function (selectWeatherDataForBarChart) uses to get the time span for the right day
 
 
-### How the Application determines what Unit to use i.e Fahrenheit to Celsius ?
+### How does the Application determines what Unit to use i.e Fahrenheit to Celsius ?
 
 When Ever the toggel button is pressed it fires off this action
 
@@ -69,7 +69,7 @@ const Kal2Fer = (Kal)=>{
 }
 ```
 
-### How the Application Fetches and stores the data ?
+### How does the Application Fetches and stores the data ?
 
 
 These actions are called depending on the state the API request is in i.e in progress , is a success or has failed
@@ -123,8 +123,137 @@ const fetchWeather = ()=>{
 ```
 
 
-### How the Application renders the cards and the chart?
+### How does the Application renders the cards and the chart?
 
+
+The Following Helper function take the timestamp as their arguments and return the UTC equivalent
+
+This function returns the date as string 
+```javascript 
+const TimeStampToUTCString = (timeStamp)=>{
+
+    const date = new Date(timeStamp*1000)
+    return date.toUTCString().split(' ').slice(0, 4).join(' ');
+}
+```
+This function returns the Time
+```javascript 
+const TimeStampToUTCTimeString = (timeStamp)=>{
+
+    const date = new Date(timeStamp*1000)
+    return date.toUTCString().split(' ')[4];
+}
+```
+
+This functions the numeric date which is used as an identifier
+```javascript 
+const TimeStampToUTCDate = (timeStamp)=>{
+
+    const date = new Date(timeStamp*1000)
+    return date.getUTCDate()
+}
+
+```
+
+This function transfroms the list of raw data into a structured object that has the numeric date as an identifer to the time and the temprature at that time
+```javascript
+const selectTempratureForDay = state=>{
+
+  const weatherData = state.list  
+
+  let weatherObj={}
+  let weatherDataArray =[]
+  let currentDate=0;
+  let currentDate2=0;
+
+  let index=0;
+  for(index=0;index<weatherData.length;index++){
+    
+    currentDate = TimeStampToUTCDate(weatherData[index].date);
+    if(currentDate2 === 0 ){
+      currentDate2 = currentDate
+    }
+    
+    if(currentDate === currentDate2){
+      weatherDataArray.push(weatherData[index])
+      weatherObj[currentDate] = weatherDataArray
+    }
+    
+    else {
+
+        weatherDataArray = []
+        weatherDataArray.push(weatherData[index])
+        weatherObj[currentDate] = weatherDataArray
+        currentDate2 = currentDate
+       }
+
+  }
+
+  console.log(weatherObj)
+
+
+  return weatherObj;
+
+} 
+```
+
+Example Output the numbers are the date and temp is the temprature in kaliv and the date is the timestamp
+
+```javascript
+  18: Array(6)
+0: {temp: 275.6, date: 1618725600}
+1: {temp: 275.93, date: 1618736400}
+2: {temp: 277.56, date: 1618747200}
+3: {temp: 278.43, date: 1618758000}
+4: {temp: 276.86, date: 1618768800}
+5: {temp: 275.65, date: 1618779600}
+
+19: Array(8)
+0: {temp: 274.64, date: 1618790400}
+1: {temp: 274.16, date: 1618801200}
+2: {temp: 276.72, date: 1618812000}
+3: {temp: 279.94, date: 1618822800}
+4: {temp: 282.88, date: 1618833600}
+5: {temp: 281.92, date: 1618844400}
+6: {temp: 278.98, date: 1618855200}
+7: {temp: 277.97, date: 1618866000}
+
+20: Array(8)
+0: {temp: 277.64, date: 1618876800}
+1: {temp: 277.44, date: 1618887600}
+2: {temp: 277.99, date: 1618898400}
+3: {temp: 281.12, date: 1618909200}
+4: {temp: 284.52, date: 1618920000}
+5: {temp: 285.71, date: 1618930800}
+6: {temp: 280.79, date: 1618941600}
+7: {temp: 278.32, date: 1618952400}
+
+21: Array(8)
+0: {temp: 277.15, date: 1618963200}
+1: {temp: 276.33, date: 1618974000}
+2: {temp: 278.68, date: 1618984800}
+3: {temp: 284.84, date: 1618995600}
+4: {temp: 286.06, date: 1619006400}
+5: {temp: 287.3, date: 1619017200}
+6: {temp: 281.75, date: 1619028000}
+7: {temp: 279.39, date: 1619038800}
+
+22: Array(8)
+0: {temp: 278.19, date: 1619049600}
+1: {temp: 277.74, date: 1619060400}
+2: {temp: 279.33, date: 1619071200}
+3: {temp: 280.47, date: 1619082000}
+4: {temp: 281.92, date: 1619092800}
+5: {temp: 283.07, date: 1619103600}
+6: {temp: 279.09, date: 1619114400}
+7: {temp: 275.85, date: 1619125200}
+
+23: Array(2)
+0: {temp: 274.2, date: 1619136000}
+1: {temp: 273.05, date: 1619146800}
+
+
+```
 
 
 
