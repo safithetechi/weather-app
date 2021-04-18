@@ -255,6 +255,57 @@ Example Output the numbers are the date and temp is the temprature in kaliv and 
 
 ```
 
+This data is then used by the following two selector functions 
+
+
+This function calculates the average and gets the date as a string to render on the cards
+
+```javascript
+
+export const selectAverageTempForEachDay = state=>{
+  const weatherObj = selectTempratureForDay(state)
+  let key =0;
+  let dataArray = []
+  let data = {id:0,date:'',averageTemp:0}
+
+
+  for(key in weatherObj){
+
+      data.id = key;
+      data.date = TimeStampToUTCString(weatherObj[key][0].date)
+      data.averageTemp = weatherObj[key].reduce((a, b) => a + b.temp, 0)/weatherObj[key].length
+      
+      dataArray.push(data)
+      data= {}
+  }
+  
+  return dataArray
+
+}
+```
+
+This function is passed the barChartId i.e selected date and the data is rendered accordingly
+
+```javascript
+export const selectWeatherDataForBarChart = state=>{
+  const weatherObj = selectTempratureForDay(state)
+
+  if(state.barChartId === null) return []
+
+ const labels =  weatherObj[state.barChartId].map(data=>
+    TimeStampToUTCTimeString(data.date)
+  )
+
+  const values = weatherObj[state.barChartId].map(data=>
+    UnitConversion(state.unit,data.temp)
+  )
+
+  return [labels,values]
+
+}
+```
+
+
 
 
 ## Further imporvements Required
