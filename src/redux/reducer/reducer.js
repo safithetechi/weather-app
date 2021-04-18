@@ -61,22 +61,29 @@ const selectTempratureForDay = state=>{
 
   let index=0;
   for(index=0;index<weatherData.length;index++){
-
+    
     currentDate = TimeStampToUTCDate(weatherData[index].date);
-      if(currentDate2 === 0 ){
-        currentDate2 = currentDate
-      }
+    if(currentDate2 === 0 ){
+      currentDate2 = currentDate
+    }
+    
+    if(currentDate === currentDate2){
+      weatherDataArray.push(weatherData[index])
+      weatherObj[currentDate] = weatherDataArray
+    }
+    
+    else {
 
-      if(currentDate === currentDate2){
+        weatherDataArray = []
         weatherDataArray.push(weatherData[index])
         weatherObj[currentDate] = weatherDataArray
-       }
-       else {
-        weatherDataArray = []
         currentDate2 = currentDate
        }
 
   }
+
+  console.log(weatherObj)
+
 
   return weatherObj;
 
@@ -85,7 +92,6 @@ const selectTempratureForDay = state=>{
 
 export const selectAverageTempForEachDay = state=>{
   const weatherObj = selectTempratureForDay(state)
-  console.log(weatherObj)
   let key =0;
   let dataArray = []
   let data = {id:0,date:'',averageTemp:0}
