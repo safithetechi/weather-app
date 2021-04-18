@@ -1,4 +1,4 @@
-# Weather App made using React and Material UI
+# Weather App made using React,Redux,Material UI and OpenWeatherAPI
 
 Preview avalible at https://safithetechi.github.io/weather-app/
 
@@ -26,8 +26,48 @@ const InitState = {
 
 ### How the Application determines what Unit to use i.e Fahrenheit to Celsius ?
 
+When Ever the toggel button is pressed it fires off this action
 
+ ```javascript 
 
+const changeUnit = unit=>{
+    return {
+        type:UNIT,
+        payload:unit
+    }
+}
+
+```
+
+The Temprature values recived from OpenWeather is in Kalvin so the following function converts it to the requested unit and then the returned value is rendered
+
+ ```javascript 
+
+const UnitConversion = (unit, kal)=>{
+
+        if(unit === CELSIUS) return parseFloat(Kal2Cel(kal)).toFixed(2);
+
+        if(unit === FAHREN) return parseFloat(Kal2Fer(kal)).toFixed(2);
+
+}
+```
+
+Conversion from Kalvin to Celsius
+```javascript 
+
+const Kal2Cel = (Kal)=>{
+    return Kal -273.15
+}
+```
+
+Conversion from Kalvin to Fahrenheit
+
+```javascript 
+
+const Kal2Fer = (Kal)=>{
+    return ((Kal -273.15)*1.8) + 32
+}
+```
 
 
 
