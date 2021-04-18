@@ -3,6 +3,29 @@
 Preview avalible at https://safithetechi.github.io/weather-app/
 
 
+## Application Architecture
+ 
+ The Initail State of the Application 
+ 
+ ```javascript 
+const InitState = {
+    loading:false,
+    error:'',
+    list: [],
+    unit : CELSIUS,
+    barChartId:null    
+} 
+```
+
+The Loading property determines whether to display the LoadingScreen or WeatherScreen
+
+ ```javascript 
+  <div className="App">
+    {loading ? <LoadingScreen/> : <WeatherScreen />}
+    </div>
+```
+
+
 ## Further imporvements Required
 
 Other than making the design responsive and adding unit tests, The following code can be memoized to save time for loading. This  function transforms the data so the selector functions for the Cards and the BarChart can render it accordingly. Hence if this is cached it will save time for loading. Also this function can be refactored to not have so many lines of code
