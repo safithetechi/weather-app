@@ -69,9 +69,63 @@ const Kal2Fer = (Kal)=>{
 }
 ```
 
+### How the Application Fetches and renders the data ?
 
+
+These actions are called depending on the state the API request is in i.e in progress , is a success or has failed
+
+
+```javascript 
+
+const fetchWeatherRequested = ()=>{
+    return {
+        type:FETCH_WEATHER_REQUESTED
+    }
+}
+
+const fetchWeatherSuccess = data=>{
+    return {
+        type:FETCH_WEATHER_SUCESS,
+        payload:data
+    }
+}
+
+const fetchWeatherFailed= error=>{
+    return {
+        type:FETCH_WEATHER_FAILED,
+        payload:error
+    }
+}
+```
+
+
+This function thanks to the redux-thunk middleware makes the request to the API and on success gets the tempratures and timestamps from the response and assigns it to the <b>list</b> property 
+
+```javascript 
+
+const fetchWeather = ()=>{
+    return function(dispatch){
+        dispatch(fetchWeatherRequested())
+        axios.get('https://api.openweathermap.org/data/2.5/forecast?q=Munich,de&APPID=75f972b80e26f14fe6c920aa6a85ad57&cnt=40')
+        .then(response=>{
+            
+            console.log("Weather Data response",response.data);
+
+            const list= response.data.list.map(data=>({temp:data.main.temp, date:data.dt}))
+            dispatch(fetchWeatherSuccess(list))
+
+        })
+        .catch(error=>{
+            dispatch(fetchWeatherFailed(error.message))
+        })
+    }
+}
+```
 
 ## Further imporvements Required
+
+Other Feature that can be added can be to get location data of the current user and to make sure that our API Key is secure we can use the something like dot-env package to hide it from people that might want to steal it
+
 
 Other than making the design responsive and adding unit tests, The following code can be memoized to save time for loading. This  function transforms the data so the selector functions for the Cards and the BarChart can render it accordingly. Hence if this is cached it will save time for loading. Also this function can be refactored to not have so many lines of code
  
@@ -117,6 +171,5 @@ const selectTempratureForDay = state=>{
 } 
 ```
     
-Other Feature that can be added can be to get location data of the current user and to make sure that our API Key is secure we can use the something like dot-env package to hide it from people that might want to steal it
 
 
